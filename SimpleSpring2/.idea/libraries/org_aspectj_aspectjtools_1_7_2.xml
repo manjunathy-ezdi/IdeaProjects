@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.aspectj:aspectjtools:1.7.2" type="repository">
+    <properties maven-id="org.aspectj:aspectjtools:1.7.2" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/aspectj/aspectjtools/1.7.2/aspectjtools-1.7.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

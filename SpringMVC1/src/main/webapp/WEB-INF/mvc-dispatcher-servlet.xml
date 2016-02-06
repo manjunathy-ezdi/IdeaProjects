@@ -1,0 +1,68 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.springapp.mvc"/>
+    <!--mvc:annotation-driven /-->
+
+    <!--bean class="com.springapp.misc.RandomObject" id="randomObject">
+        <property name="id" value="-1"></property>
+        <property name="name" value="Sher Khan"></property>
+    </bean-->
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- Configure to plugin JSON as request and response in method handler -->
+    <!--bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jsonMessageConverter"/>
+            </list>
+        </property>
+    </bean-->
+
+    <!-- Configure bean to convert JSON to POJO and vice versa -->
+    <!--bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+    </bean-->
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName"  value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/hibtest"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="P@ssw0rd@123"></property>
+    </bean>
+
+    <!--bean id="mysessionFactory"  class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+
+        <property name="mappingResources">
+            <list>
+                <value>hibconfig.hbm.xml</value>
+            </list>
+        </property>
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="dataObject.dialect">org.dataObject.dialect.Oracle9Dialect</prop>
+                <prop key="dataObject.hbm2ddl.auto">update</prop>
+                <prop key="dataObject.show_sql">true</prop>
+
+            </props>
+        </property>
+    </bean-->
+
+    <!--bean id="template" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="mysessionFactory"></property>
+    </bean-->
+
+    <!--bean id="d" class="com.javatpoint.EmployeeDao">
+        <property name="template" ref="template"></property>
+    </bean-->
+
+</beans>

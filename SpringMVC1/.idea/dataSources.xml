@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="712353665">
+    <data-source source="LOCAL" name="src:main:resources:hibernate-context.xml" uuid="724525df-e652-428e-9092-b16baee8dfb1">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/hibtest</jdbc-url>
+      <user-name>user</user-name>
+      <user-password>dfdadfcbdfd9dfd9dfdddfc5dfd8dfce</user-password>
+      <libraries>
+        <library>
+          <url>file://$MAVEN_REPOSITORY$/org/apache/commons/com.springsource.org.apache.commons.logging/1.1.1/com.springsource.org.apache.commons.logging-1.1.1.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+

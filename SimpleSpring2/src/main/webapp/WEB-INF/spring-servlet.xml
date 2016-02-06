@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan  base-package="mvc" />
+
+    <!-- Employee Beans -->
+    <bean id="employee1" class="objs.Employee">
+        <constructor-arg value="10" type="int"></constructor-arg>
+        <constructor-arg value="Manu"></constructor-arg>
+        <property name="name" value="Manjunath Ganapati Yaji"></property>
+        <!-- setter is called after constructor. Hence name="Manjunath Yaji" and NOT "Manu" -->
+        <property name="department" ref="department1"></property>
+    </bean>
+
+    <bean id="employee2" parent="employee1">
+        <property name="name" value="Parth Pathak"></property>
+        <property name="id" value="1"></property>
+    </bean>
+
+    <bean id="employee3" class="objs.Employee">
+        <constructor-arg value="2" type="int"></constructor-arg>
+        <constructor-arg value="Manu"></constructor-arg>
+        <property name="name" value="Ravi Agrawal"></property>
+        <!-- setter is called after constructor. Hence name="Manjunath Yaji" and NOT "Manu" -->
+        <property name="department" ref="department1"></property>
+    </bean>
+
+    <!-- Department Bean -->
+    <bean id="department1" class="objs.Department">
+        <constructor-arg value="1" type="int"></constructor-arg>
+        <constructor-arg value="Timepass"></constructor-arg>
+        <!--constructor-arg ref="employee1" type="main.java.objs.Employee"></constructor-arg--> <!-- THIS WORKS -->
+        <!--constructor-arg><ref bean="employee1"></ref> </constructor-arg--> <!-- THIS WORKS -->
+        <constructor-arg ref="employee1"></constructor-arg> <!-- THIS WORKS TOO! -->
+        <!--constructor-arg>
+            <list>
+                <ref bean="employee1"></ref>
+                <ref bean="employee2"></ref>
+                <ref bean="employee3"></ref>
+            </list>
+        </constructor-arg-->   <!-- THIS RESULTS IN CIRCULAR REFERENCE - EXCEPTION!! NOT GOOD!! -->
+        <property name="employees">
+            <list>
+                <ref bean="employee1"></ref>
+                <ref bean="employee2"></ref>
+                <ref bean="employee3"></ref>
+            </list>
+        </property>
+
+        <property name="employeeMap">
+            <map>
+                <entry key="1" value-ref="employee2"></entry>
+                <entry key="2" value-ref="employee3"></entry>
+                <entry key="10" value-ref="employee1"></entry>
+            </map>
+        </property>
+    </bean>
+
+    <!-- PARENT Bean Example. This is a way to copy bean -->
+    <bean id="department2" parent="department1">
+        <property name="name" value="Spacepass"></property>
+        <property name="id" value="2"></property>
+    </bean>
+
+    <!-- FACTORY! DepartmentFactory class producing Department object -->
+    <bean id="departmentFactory" class="factory.DepartmentFactory" factory-method="makeDepartment"></bean>
+
+    <!-- FACTORY! DepartmentFactory class producing Department object -->
+    <bean id="departmentFactory2" class="factory.DepartmentFactory" factory-method="getDepartment">
+        <constructor-arg value="200"></constructor-arg>
+    </bean>
+
+    <!-- aspect oriented programming support (http://www.javatpoint.com/spring-aop-aspectj-annotation-example)-->
+    <bean id="aopDisplayInfoExecutionTime" class="aop.DisplayInfoExecutionTime"></bean>
+    <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"></bean>
+
+
+    <!-- HIBERNATE CONFIGURATIONS -->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName"  value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/hibtest"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="P@ssw0rd@123"></property>
+    </bean>
+
+    <bean id="mySessionFactory"  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+
+        <!--property name="mappingResources">
+            <list>
+                <value>employee.hbm.xml</value>
+            </list>
+        </property-->
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.show_sql">true</prop>
+            </props>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>hibernate.dbObjects.Student</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--bean id="template" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="mySessionFactory"></property>
+    </bean-->
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="mySessionFactory"></property>
+    </bean>
+
+    <bean id="studentSaver" class="hibernate.saver.StudentSaver">
+        <property name="sessionFactory" ref="mySessionFactory"></property>
+    </bean>
+
+    <bean id="student" class="hibernate.dbObjects.Student">
+    </bean>
+
+    <!-- Spring MVC -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+
+</beans>

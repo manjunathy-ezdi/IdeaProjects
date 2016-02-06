@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="com.springsource.com.mysql.jdbc-5.1.6">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/mysql/jdbc/com.springsource.com.mysql.jdbc/5.1.6/com.springsource.com.mysql.jdbc-5.1.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

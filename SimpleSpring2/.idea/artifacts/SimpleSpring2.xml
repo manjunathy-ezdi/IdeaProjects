@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SimpleSpring2">
+    <output-path>$PROJECT_DIR$/out/artifacts/SimpleSpring2</output-path>
+    <root id="archive" name="SimpleSpring2.war" />
+  </artifact>
+</component>
