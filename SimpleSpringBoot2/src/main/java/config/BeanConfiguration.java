@@ -8,11 +8,15 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.DispatcherServletAutoConfiguration;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -24,7 +28,7 @@ import java.util.Properties;
 /**
  * Created by EZDI\manjunath.y on 5/2/16.
  */
-@ComponentScan
+@ComponentScan(basePackages = {"application","config","controller","hibernate"})
 @SpringBootApplication
 @EnableWebMvc
 public class BeanConfiguration {
@@ -84,11 +88,30 @@ public class BeanConfiguration {
         return transactionManager;
     }
 
-    @Bean
+    @Bean(name = "studentSaver")
     public StudentSaver getStudentSaver(SessionFactory sessionFactory){
         StudentSaverImpl studentSaver = new StudentSaverImpl();
         studentSaver.setSessionFactory(sessionFactory);
         return studentSaver;
+    }
+
+    @Bean(name=DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_BEAN_NAME)
+    public DispatcherServlet getDispatcherServlet(ApplicationContext applicationContext) {
+        AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
+        webContext.setParent(applicationContext);
+        //webContext.register(BeanConfiguration.class);
+        // webContext.refresh();
+        return new DispatcherServlet(webContext);
+    }
+
+    @Bean(name=DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME)
+    public ServletRegistrationBean getServletRegistrationBean(DispatcherServlet dispatcherServlet) {
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet);
+        servletRegistrationBean.addUrlMappings("/");
+        servletRegistrationBean.addUrlMappings("*.jsp");
+        servletRegistrationBean.setLoadOnStartup(0);
+        servletRegistrationBean.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
+        return servletRegistrationBean;
     }
 
 
@@ -101,9 +124,10 @@ public class BeanConfiguration {
 
         ApplicationContext applicationContext = SpringApplication.run(BeanConfiguration.class);
 
-        System.out.println("The beans configured (automatically by spring-boot!!) are: ");
         String[] beanNames = applicationContext.getBeanDefinitionNames();
+        System.out.println("The beans configured (automatically by spring-boot!!) are: ");
         if(beanNames != null){
+            System.out.println("NUMBER : "+beanNames.length);
             Arrays.sort(beanNames);
             for(String each: beanNames){
                 System.out.println(each);

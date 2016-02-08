@@ -4,14 +4,13 @@ import hibernate.dao.StudentSaver;
 import hibernate.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by EZDI\manjunath.y on 5/2/16.
  */
 @RestController
-@ComponentScan
+@RequestMapping(path="/student")
 public class StudentController {
 
     @Autowired

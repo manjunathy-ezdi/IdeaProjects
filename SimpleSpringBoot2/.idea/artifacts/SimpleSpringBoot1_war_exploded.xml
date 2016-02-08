@@ -2,10 +2,10 @@
   <artifact type="exploded-war" name="SimpleSpringBoot1:war exploded">
     <output-path>$PROJECT_DIR$/target/SimpleSpringBoot1</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="SimpleSpringBoot1/web/Web" />
+      <element id="javaee-facet-resources" facet="SimpleSpringBoot2/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="SimpleSpringBoot1" />
+          <element id="module-output" name="SimpleSpringBoot2" />
         </element>
       </element>
     </root>

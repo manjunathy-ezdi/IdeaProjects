@@ -31,7 +31,7 @@ public class StudentSaverImpl implements StudentSaver {
     public Student getStudentByRollNum(int rollNum) {
         if(sessionFactory == null) return null;
         Session session = sessionFactory.openSession();
-        Transaction tx = session.getTransaction();
+        Transaction tx = session.beginTransaction();
         Student student = (Student)session.get(Student.class,rollNum);
         tx.commit();
         session.close();

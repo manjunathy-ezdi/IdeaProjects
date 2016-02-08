@@ -1,11 +1,9 @@
 package application;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 /**
  * Created by EZDI\manjunath.y on 5/2/16.
  */
-@SpringBootApplication
+//@SpringBootApplication
 public class MyApplication {
 
     /*
