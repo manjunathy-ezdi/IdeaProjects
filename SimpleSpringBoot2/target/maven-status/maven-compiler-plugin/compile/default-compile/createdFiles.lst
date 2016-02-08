@@ -1,8 +1,0 @@
-controller/StudentController.class
-hibernate/dao/impl/StudentSaverImpl.class
-config/MySpringWebApplicationInitializer.class
-application/MyApplication.class
-hibernate/dao/StudentSaver.class
-controller/HelloController.class
-hibernate/model/Student.class
-config/BeanConfiguration.class
