@@ -105,7 +105,7 @@ public class BeanConfiguration {
     }
 
     @Bean(name=DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME)
-    public ServletRegistrationBean getServletRegistrationBean(DispatcherServlet dispatcherServlet) {
+    public ServletRegistrationBean dispatcherServletRegistration(DispatcherServlet dispatcherServlet) {
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(dispatcherServlet);
         servletRegistrationBean.addUrlMappings("/");
         servletRegistrationBean.addUrlMappings("*.jsp");
