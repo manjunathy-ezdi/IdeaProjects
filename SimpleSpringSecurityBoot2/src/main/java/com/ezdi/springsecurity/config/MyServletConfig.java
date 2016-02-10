@@ -14,7 +14,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -40,7 +39,7 @@ public class MyServletConfig {
         //servletRegistrationBean.setServlet(dispatcherServlet);
         servletRegistrationBean.addUrlMappings("/");
         servletRegistrationBean.addUrlMappings("*.jsp");
-        servletRegistrationBean.setLoadOnStartup(0);
+        servletRegistrationBean.setLoadOnStartup(1);
         servletRegistrationBean.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);
         return servletRegistrationBean;
     }
@@ -53,23 +52,27 @@ public class MyServletConfig {
         return viewResolver;
     }
 
-    @Bean(name="dataSource")
-    @Resource(name="dataSource")
-    public DataSource dataSource(){
+    //@Primary
+    @Bean(name="serviceDataSource")
+    //@Resource(name="dataSource")
+    public DataSource serviceDataSource(){
         BasicDataSource basicDataSource = new BasicDataSource();
+        System.out.println("YAJI: Created dataSource"+basicDataSource);
         basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
         basicDataSource.setUrl("jdbc:mysql://localhost:3306/hibtest2");
         basicDataSource.setUsername("root");
         basicDataSource.setPassword("P@ssw0rd@123");
+        System.out.println("YAJI: Returning dataSource");
         return basicDataSource;
     }
 
     @Bean
-    public SessionFactory sessionFactory(){
-        //LocalSessionFactoryBuilder localSessionFactoryBuilder = new LocalSessionFactoryBuilder(getDataSource());
-        LocalSessionFactoryBuilder localSessionFactoryBuilder = new LocalSessionFactoryBuilder(dataSource());
+    public SessionFactory sessionFactory(DataSource serviceDataSource){
+        System.out.println("YAJI: SESSIONFACTORY: "+serviceDataSource);
+        LocalSessionFactoryBuilder localSessionFactoryBuilder = new LocalSessionFactoryBuilder(serviceDataSource);
+        //LocalSessionFactoryBuilder localSessionFactoryBuilder = new LocalSessionFactoryBuilder(dataSource());
         localSessionFactoryBuilder.addAnnotatedClasses(Teacher.class);
-        //localSessionFactoryBuilder.addProperties(getHibernateProperties());
+        localSessionFactoryBuilder.addProperties(getHibernateProperties());
         return localSessionFactoryBuilder.buildSessionFactory();
     }
 
