@@ -3,6 +3,8 @@ package com.ezdi.springsecurity.config;
 import com.ezdi.springsecurity.hibernate.dao.StudentSaver;
 import com.ezdi.springsecurity.hibernate.dao.implementation.StudentSaverImpl;
 import com.ezdi.springsecurity.hibernate.model.Student;
+import com.ezdi.springsecurity.service.StudentService;
+import com.ezdi.springsecurity.service.implementation.StudentServiceImpl;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.boot.SpringApplication;
@@ -26,7 +28,7 @@ import java.util.Properties;
 /**
  * Created by EZDI\manjunath.y on 8/2/16.
  */
-@ComponentScan(basePackages = "com.ezdi.springsecurity")
+@ComponentScan(basePackages={"com.ezdi.springsecurity.config","com.ezdi.springsecurity.controller","com.ezdi.springsecurity.hibernate","com.ezdi.springsecurity.service"})
 @SpringBootApplication
 @EnableWebMvc
 public class MySpringSecurityApplication {
@@ -77,6 +79,13 @@ public class MySpringSecurityApplication {
         return studentSaver;
     }
 
+    @Bean
+    public StudentService studentService(StudentSaver studentSaver){
+        StudentServiceImpl studentService = new StudentServiceImpl();
+        studentService.setStudentSaver(studentSaver);
+        return studentService;
+    }
+
     @Bean(name= DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_BEAN_NAME)
     public DispatcherServlet dispatcherServlet(ApplicationContext applicationContext) {
         AnnotationConfigWebApplicationContext webContext = new AnnotationConfigWebApplicationContext();
@@ -92,6 +101,7 @@ public class MySpringSecurityApplication {
         //ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean();
         //servletRegistrationBean.setServlet(dispatcherServlet);
         servletRegistrationBean.addUrlMappings("/");
+        servletRegistrationBean.addUrlMappings("/student");
         servletRegistrationBean.addUrlMappings("*.jsp");
         servletRegistrationBean.setLoadOnStartup(0);
         servletRegistrationBean.setName(DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_REGISTRATION_BEAN_NAME);

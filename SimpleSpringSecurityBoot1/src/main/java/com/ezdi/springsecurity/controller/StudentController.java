@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by EZDI\manjunath.y on 8/2/16.
  */
 @RestController
-@RequestMapping(path="/student")
+@RequestMapping(path="/")
 public class StudentController {
 
     @Autowired
@@ -26,15 +26,15 @@ public class StudentController {
 
     @RequestMapping(path="/student", method= RequestMethod.GET)
     @ResponseBody
-    public Student getStudentByRollNum(@RequestParam int rollNum){
-        StudentService studentService = (StudentService)applicationContext.getBean("studentSaver");
+    public Student getStudentByRollNum(@RequestParam(name="rollNum") int rollNum){
+        StudentService studentService = (StudentService)applicationContext.getBean("studentService");
         return studentService.getStudentByRollNum(rollNum);
     }
 
     @RequestMapping(path="/student", method=RequestMethod.POST)
     @ResponseBody
     public void addStudent(Student s){
-        StudentService studentService = (StudentService)applicationContext.getBean("studentSaver");
+        StudentService studentService = (StudentService)applicationContext.getBean("studentService");
         studentService.saveOrUpdateStudent(s);
     }
 }
