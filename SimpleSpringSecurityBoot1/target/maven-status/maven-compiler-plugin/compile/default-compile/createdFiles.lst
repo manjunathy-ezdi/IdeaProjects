@@ -1,8 +1,13 @@
 com/ezdi/springsecurity/hibernate/dao/implementation/StudentSaverImpl.class
-com/ezdi/springsecurity/controller/StudentController.class
+com/ezdi/springsecurity/config/MyServletConfig.class
+com/ezdi/springsecurity/initializer/session/SessionInitializer.class
 com/ezdi/springsecurity/hibernate/model/Student.class
+com/ezdi/springsecurity/controller/StudentController.class
 com/ezdi/springsecurity/service/StudentService.class
+com/ezdi/springsecurity/config/SecurityConfig.class
 com/ezdi/springsecurity/controller/IndexController.class
-com/ezdi/springsecurity/service/implementation/StudentServiceImpl.class
+com/ezdi/springsecurity/initializer/mvc/MvcInitializer.class
 com/ezdi/springsecurity/config/MySpringSecurityApplication.class
+com/ezdi/springsecurity/service/implementation/StudentServiceImpl.class
 com/ezdi/springsecurity/hibernate/dao/StudentSaver.class
+com/ezdi/springsecurity/config/HttpSessionConfig.class

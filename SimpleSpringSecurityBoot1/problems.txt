@@ -1,0 +1,17 @@
+When spring-session is configured and spring-security is NOT configured.
+
+Tried without x-auth-token. Worked fine. Because no authentication.
+
+Tried with valid x-auth-token (which was present in redis and worked for other microservices which used the same jdbc authentication).
+The following error cropped up:
+{
+  "timestamp": 1456932067842,
+  "status": 500,
+  "error": "Internal Server Error",
+  "exception": "org.springframework.data.redis.serializer.SerializationException",
+  "message": "Cannot deserialize; nested exception is org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: org.springframework.security.core.context.SecurityContextImpl",
+  "path": "/student"
+}
+
+x-auth-token works fine if authentication layer is present with the same type of authentication. 
+
